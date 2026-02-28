@@ -7,6 +7,7 @@ $ScriptDir = "$ChezmoiDir/scripts"
 . "$ScriptDir/configure_cli.ps1"
 . "$ScriptDir/fish.ps1"
 . "$ScriptDir/wsl.ps1"
+. "$ScriptDir/tridactyl.ps1"
 
 Write-Host @"
 
@@ -90,6 +91,18 @@ Write-Host @"
 
 # CLI configurations
 Build-BatCache
+
+Write-Host @"
+
+ _
+| |_ ___ ___ _ __ _ ___ ___ ___
+| . |  _| . | |  | |_ -| -_|  _|
+|___|_| |___|\_/\_/|___|___|_|
+
+"@
+
+# Install tridactyl-native
+Install-TridactylNative
 
 Write-Host @"
 

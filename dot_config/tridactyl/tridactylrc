@@ -1,0 +1,5 @@
+set theme midnight
+
+" Tab
+bind J tabnext
+bind K tabprev

@@ -5,4 +5,5 @@ scripts/
 
 {{ if eq .secrets true }}
 .config/git/
+.config/tridactyl/
 {{ end }}
