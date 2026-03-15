@@ -1,0 +1,9 @@
+[terminal]
+shell = { program = "wsl.exe", args = [
+  "--cd",
+  "~",
+  "--exec",
+  "/run/current-system/sw/bin/fish",
+  "-c",
+  "zellij",
+] }
