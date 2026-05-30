@@ -9,6 +9,7 @@ winget                                                # package manager
 
 # -------------------------------------------------- // Development
 age                                                   # encryption tool
+direnv                                                # per-directory env vars
 git                                                   # version control system
 lazygit                                               # terminal ui for git
 neovim                                                # editor
