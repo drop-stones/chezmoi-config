@@ -1,0 +1,4 @@
+[global]
+bash_path = "C:/Users/s2h6i/scoop/apps/git/current/bin/bash.exe"
+log_filter = "^$"
+log_format = "-"
