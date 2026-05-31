@@ -1,0 +1,13 @@
+# Persist environment variables to the Windows user environment so they
+# apply uniformly across pwsh, WSL -> Windows .exe interop, etc.
+
+# XDG Base Directory paths
+[Environment]::SetEnvironmentVariable("XDG_CONFIG_HOME", "$env:USERPROFILE\.config",       "User")
+[Environment]::SetEnvironmentVariable("XDG_DATA_HOME",   "$env:USERPROFILE\.local\share", "User")
+[Environment]::SetEnvironmentVariable("XDG_CACHE_HOME",  "$env:USERPROFILE\.cache",       "User")
+
+# Editor
+[Environment]::SetEnvironmentVariable("EDITOR",              "nvim", "User")
+[Environment]::SetEnvironmentVariable("VISUAL",              "nvim", "User")
+[Environment]::SetEnvironmentVariable("GIT_EDITOR",          "nvim", "User")
+[Environment]::SetEnvironmentVariable("GIT_SEQUENCE_EDITOR", "nvim", "User")
