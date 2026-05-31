@@ -17,6 +17,10 @@ openssh                                               # secure shell
 tree-sitter                                           # parser generator
 win32yank                                             # windows clipboard tool
 
+# -------------------------------------------------- // AI Coding Agent
+claude-code                                           # AI coding agent (Anthropic)
+copilot-cli                                           # AI coding agent (GitHub)
+
 # -------------------------------------------------- // Programming Language
 nodejs                                                # Node.js
 python                                                # python
