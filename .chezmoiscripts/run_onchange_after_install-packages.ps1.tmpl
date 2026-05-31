@@ -114,6 +114,10 @@ Write-Host @"
 
 "@
 
+# Patch msys2_shell.cmd before any msys2 invocation (scoop may have just
+# refreshed it and wiped a previous patch).
+Update-Msys2Shell
+
 # Install packages using msys2
 Install-Msys2PackageList "$PackagesDir/msys2.lst"
 

@@ -1,0 +1,9 @@
+# Re-apply the msys2_shell.cmd patch whenever the patch logic changes. The
+# function itself lives in scripts/windows_packages.ps1 so it can also be
+# invoked from install-packages, where ordering matters (msys2 is launched
+# right after).
+
+$ChezmoiDir = "{{ .chezmoi.sourceDir }}"
+. "$ChezmoiDir/scripts/windows_packages.ps1"
+
+Update-Msys2Shell

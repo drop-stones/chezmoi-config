@@ -75,3 +75,63 @@ function Install-Msys2PackageList([string] $PackageList) {
   msys2 -lc "pacman -Sy" # Update package databases information
   Install-Packages $PackageList (Get-Command Test-IsMsys2PackageInstalled).ScriptBlock (Get-Command Test-IsMsys2PackageAvailable).ScriptBlock (Get-Command Install-Msys2Package).ScriptBlock
 }
+
+# Patch msys2_shell.cmd to inject env vars (symlink mode, POSIX-form XDG paths)
+# before any shell starts inside msys2. The block is bracketed by markers so
+# the rewrite is idempotent. scoop overwrites this file on msys2 update, so
+# this must run before any msys2 invocation in the same session.
+function Update-Msys2Shell {
+  $Msys2Cmd = "$env:USERPROFILE\scoop\apps\msys2\current\msys2_shell.cmd"
+  if (-not (Test-Path $Msys2Cmd)) {
+    return
+  }
+
+  # C:\Users\foo -> /c/Users/foo
+  $Drive     = $env:USERPROFILE.Substring(0, 1).ToLower()
+  $Rest      = $env:USERPROFILE.Substring(2) -replace '\\', '/'
+  $HomePosix = "/$Drive$Rest"
+
+  $MarkerBegin = "rem >>> chezmoi-env-begin"
+  $MarkerEnd   = "rem <<< chezmoi-env-end"
+  $Banner      = "rem " + ("=" * 74)
+
+  $Block = @"
+
+$Banner
+$MarkerBegin
+$Banner
+
+rem Native Windows symlinks (instead of msys2's copy fallback).
+set MSYS=winsymlinks:nativestrict
+
+rem XDG paths in POSIX form. Windows user env holds them as C:\... which
+rem breaks fish's conf.d glob; override to POSIX form for msys2 only.
+set XDG_CONFIG_HOME=$HomePosix/.config
+set XDG_DATA_HOME=$HomePosix/.local/share
+set XDG_CACHE_HOME=$HomePosix/.cache
+
+$Banner
+$MarkerEnd
+$Banner
+
+"@
+
+  $Content = [System.IO.File]::ReadAllText($Msys2Cmd)
+
+  # Strip any previous block, including the banner lines surrounding it.
+  $Content = [regex]::Replace(
+    $Content,
+    "(?ms)\r?\n?rem ={3,}\r?\n$MarkerBegin\r?\n.*?$MarkerEnd\r?\nrem ={3,}\r?\n",
+    ""
+  )
+
+  # Insert right after `setlocal EnableDelayedExpansion`.
+  $Content = [regex]::Replace(
+    $Content,
+    "(?m)^(setlocal EnableDelayedExpansion\r?\n)",
+    "`$1$Block",
+    1
+  )
+
+  [System.IO.File]::WriteAllText($Msys2Cmd, $Content)
+}
