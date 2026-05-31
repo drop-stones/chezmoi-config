@@ -5,8 +5,5 @@ alias la 'eza --icons --group-directories-first --all'
 alias lla 'eza --icons --group-directories-first --long --all'
 alias lt 'eza --icons --group-directories-first --tree'
 
-# bat
-alias cat bat
-
 # zoxide
 alias cd z
