@@ -28,6 +28,7 @@ python                                                # python
 rustup                                                # rust
 
 # -------------------------------------------------- // Command-Line Utilities
+1password-cli                                         # 1password secrets manager (cli)
 7zip                                                  # file archiver
 bat                                                   # cat(1) clone
 bottom                                                # process/system monitor
