@@ -3,7 +3,7 @@ TODO.md
 packages/
 scripts/
 
-{{ if eq .secrets true }}
+{{ if eq .work true }}
 .config/git/
 .config/lazygit/
 .config/tridactyl/
