@@ -1,22 +1,14 @@
+# Native Windows yazi.exe. The WSL yazi config lives in nix-config, so this
+# file only ever runs in a Windows context (no `for` needed). It mirrors the
+# WSL openers: text opens in the editor, everything else (incl. *.exe, which
+# explorer launches) goes to `open`; use `O` to pick an opener interactively.
 [opener]
 edit = [
-  { run = 'fish -c "nvim (wslpath -w \"$1\")"', desc = "Edit", block = true, for = "linux" },
-  { run = 'nvim %*', desc = "Edit", block = true, for = "windows" },
+  { run = 'nvim %*', desc = "Edit", block = true },
 ]
 open = [
-  { run = 'fish -c "explorer (wslpath -w \"$1\")"', desc = "Open in default program", orphan = true, for = "linux" },
-  { run = 'explorer "%1"', desc = "Open in default program", orphan = true, for = "windows" },
+  { run = 'explorer "%1"', desc = "Open in default program", orphan = true },
 ]
 reveal = [
-  { run = 'fish -c "explorer /select,(wslpath -w \"$1\")"', desc = "Reveal", orphan = true, for = "linux" },
-  { run = 'explorer /select,"%1"', desc = "Reveal", orphan = true, for = "windows" },
-]
-
-[open]
-prepend_rules = [
-  # Visual Studio
-  { name = "*.sln", use = ["open", "edit"] },
-  { name = "*.csproj", use = ["open", "edit"] },
-  # Batch file
-  { name = "*.bat", use = ["open", "edit"] },
+  { run = 'explorer /select,"%1"', desc = "Reveal", orphan = true },
 ]
